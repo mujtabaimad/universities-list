@@ -1,0 +1,14 @@
+.list-item {
+    width: 100%;
+
+    padding: 20px 40px;
+
+    border-bottom: 1px solid whitesmoke;
+
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+        background-color: whitesmoke;
+    }
+}
