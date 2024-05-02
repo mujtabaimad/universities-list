@@ -1,14 +1,26 @@
 .list-item {
     padding: 20px 40px;
 
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     border-bottom: 1px solid whitesmoke;
 
     text-decoration: none;
     color: black;
 
+    transition: all 0.5s ease-in;
+
     &:hover {
         background-color: whitesmoke;
+    }
+
+    .delete-list-item {
+        background-color: rgb(210, 83, 83);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 0;
     }
 }

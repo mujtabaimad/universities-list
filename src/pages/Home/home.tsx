@@ -26,13 +26,26 @@ function Home() {
       });
   }, []);
 
+  const onDeleteUniversity = useCallback(
+    (deletedUniversity: UniversityType) => {
+      const newUniversities =
+        universities?.filter((uni) => uni.name !== deletedUniversity.name) ?? [];
+      setUniversities([...newUniversities]);
+    },
+    [universities]
+  );
+
   const universitiesList = useMemo(() => {
     return filteredUniversities?.map((university) => {
       return (
-        <UniversityListItem university={university} key={university.name} />
+        <UniversityListItem
+          university={university}
+          key={university.name}
+          onDelete={onDeleteUniversity}
+        />
       );
     });
-  }, [filteredUniversities]);
+  }, [filteredUniversities, onDeleteUniversity]);
 
   const onFiltersChange = useCallback((newUniversities: UniversityType[]) => {
     setFilteredUniversities([...newUniversities]);

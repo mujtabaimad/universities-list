@@ -4,9 +4,16 @@ import { Link } from "react-router-dom";
 
 import "./list-item.scss";
 
-const UniversityListItem: FC<{ university: UniversityType }> = ({
+type UniversityListItemType = {
+  university: UniversityType;
+  onDelete: (university: UniversityType) => void;
+};
+
+const UniversityListItem: FC<UniversityListItemType> = ({
   university,
+  onDelete,
 }) => {
+
   return (
     <Link
       to={`/university-details/?${new URLSearchParams({
@@ -20,6 +27,15 @@ const UniversityListItem: FC<{ university: UniversityType }> = ({
       className="list-item"
     >
       <p>{university.name}</p>
+      <button
+        className="delete-list-item"
+        onClick={(event) => {
+          event.preventDefault();
+          onDelete(university);
+        }}
+      >
+        Delete
+      </button>
     </Link>
   );
 };
