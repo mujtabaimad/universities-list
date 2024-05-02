@@ -25,12 +25,11 @@
         justify-content: center;
     }
 
-    .universities-list {
-        max-width: 800px;
-
+    .universities-list-wrapper {
         padding: 10px;
 
         display: flex;
         flex-direction: column;
+        gap: 20px;
     }
 }

@@ -4,9 +4,13 @@ import { UniversityType } from "../../models/university-model";
 import UniversityListItem from "../../components/list-item/list-item";
 
 import "./home.scss";
+import Filters from "../../components/filters/filters";
 
 function Home() {
   const [universities, setUniversities] = useState<UniversityType[]>();
+  const [filteredUniversities, setFilteredUniversities] =
+    useState<UniversityType[]>();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -15,6 +19,7 @@ function Home() {
     fetchUniversities()
       .then((universitieslist) => {
         setUniversities(universitieslist);
+        setFilteredUniversities(universitieslist);
       })
       .finally(() => {
         setIsLoading(false);
@@ -22,12 +27,12 @@ function Home() {
   }, []);
 
   const universitiesList = useMemo(() => {
-    return universities?.map((university) => {
+    return filteredUniversities?.map((university) => {
       return (
         <UniversityListItem university={university} key={university.name} />
       );
     });
-  }, [universities]);
+  }, [filteredUniversities]);
 
   return (
     <div className="home-wrapper">
@@ -36,6 +41,12 @@ function Home() {
         <div className="loading">Loading Universities...</div>
       ) : (
         <div className="universities-list-wrapper">
+          <Filters
+            universities={universities}
+            onChange={(newUniversities) => {
+              setFilteredUniversities([...newUniversities]);
+            }}
+          />
           <div className="universities-list">{universitiesList}</div>
         </div>
       )}
