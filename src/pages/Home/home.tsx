@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchUniversities } from "../../services/universities";
 import { UniversityType } from "../../models/university-model";
 import UniversityListItem from "../../components/list-item/list-item";
@@ -18,8 +18,8 @@ function Home() {
     setIsLoading(true);
     fetchUniversities()
       .then((universitieslist) => {
-        setUniversities(universitieslist);
-        setFilteredUniversities(universitieslist);
+        setUniversities([...universitieslist]);
+        setFilteredUniversities([...universitieslist]);
       })
       .finally(() => {
         setIsLoading(false);
@@ -34,6 +34,10 @@ function Home() {
     });
   }, [filteredUniversities]);
 
+  const onFiltersChange = useCallback((newUniversities: UniversityType[]) => {
+    setFilteredUniversities([...newUniversities]);
+  }, []);
+
   return (
     <div className="home-wrapper">
       <div className="page-title">UAE Universities List</div>
@@ -41,12 +45,7 @@ function Home() {
         <div className="loading">Loading Universities...</div>
       ) : (
         <div className="universities-list-wrapper">
-          <Filters
-            universities={universities}
-            onChange={(newUniversities) => {
-              setFilteredUniversities([...newUniversities]);
-            }}
-          />
+          <Filters universities={universities} onChange={onFiltersChange} />
           <div className="universities-list">{universitiesList}</div>
         </div>
       )}
