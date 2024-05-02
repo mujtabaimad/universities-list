@@ -7,12 +7,18 @@ import "./home.scss";
 
 function Home() {
   const [universities, setUniversities] = useState<UniversityType[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     // fetching universities list on first load
-    fetchUniversities().then((universitieslist) => {
-      setUniversities(universitieslist);
-    });
+    setIsLoading(true);
+    fetchUniversities()
+      .then((universitieslist) => {
+        setUniversities(universitieslist);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const universitiesList = useMemo(() => {
@@ -26,7 +32,13 @@ function Home() {
   return (
     <div className="home-wrapper">
       <div className="page-title">UAE Universities List</div>
-      <div className="universities-list">{universitiesList}</div>
+      {isLoading ? (
+        <div className="loading">Loading Universities...</div>
+      ) : (
+        <div className="universities-list-wrapper">
+          <div className="universities-list">{universitiesList}</div>
+        </div>
+      )}
     </div>
   );
 }

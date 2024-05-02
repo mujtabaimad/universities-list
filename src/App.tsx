@@ -7,16 +7,11 @@ import NotFoundPage from "./pages/not-found-page";
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/university-details/:name"
-          element={<UniversityDetails />}
-        />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/university-details/:name" element={<UniversityDetails />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
